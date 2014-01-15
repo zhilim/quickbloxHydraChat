@@ -21,7 +21,7 @@ import com.quickblox.module.videochat.model.listeners.OnQBVideoChatListener;
 import com.quickblox.module.videochat.model.objects.CallState;
 import com.quickblox.module.videochat.model.objects.CallType;
 import com.quickblox.module.videochat.model.objects.VideoChatConfig;
-//import com.zhilim.hydrachat.ActivityVideoChat;
+import com.zhilim.hydrachat.ActivityVideoChat;
 
 
 public class ActivityCallUser extends Activity{
@@ -47,7 +47,11 @@ public class ActivityCallUser extends Activity{
 	     String userName = getIntent().getStringExtra("userName");
 	     String myName = getIntent().getStringExtra("myName");
 	     qbUser = new QBUser(userId);
+	     System.out.println("user id: " + userId);
+	     //System.out.println(qbUser.getFullName());
+	     //System.out.println(CallType.VIDEO_AUDIO);
 	     isCanceledVideoCall = true;
+	     videoChatConfig = new VideoChatConfig();
 	     
 	     txtName = (TextView) findViewById(R.id.textView1);
 	     videoCallBtn = (Button) findViewById(R.id.callButton);
@@ -73,7 +77,11 @@ public class ActivityCallUser extends Activity{
 	                    progressDialog.show();
 	                }
 	                System.out.println("Trying to start video call. fingers crossed!");
+	                try{
 	                videoChatConfig = QBVideoChatService.getService().callUser(qbUser, CallType.VIDEO_AUDIO, null);
+	                }catch(Exception e){
+	                	//ignore
+	                }
 	            }
 	        });
 	     
