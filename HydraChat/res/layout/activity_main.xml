@@ -38,4 +38,13 @@
         android:layout_marginRight="38dp"
         android:text="User 2" />
 
+    <Button
+        android:id="@+id/loginUser3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginUser1"
+        android:layout_marginTop="42dp"
+        android:layout_toRightOf="@+id/loginUser1"
+        android:text="User 3" />
+
 </RelativeLayout>

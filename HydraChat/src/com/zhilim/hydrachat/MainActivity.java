@@ -17,14 +17,18 @@ import com.zhilim.hydrachat.R;
 
 public class MainActivity extends Activity {
 	
-	private final String FIRST_USER_PASSWORD = "genius2791";
-    private final String FIRST_USER_LOGIN = "zhilim";
+	private final String FIRST_USER_PASSWORD = "johnwatson";
+    private final String FIRST_USER_LOGIN = "johnwatson";
     private final String SECOND_USER_PASSWORD = "sherlock";
     private final String SECOND_USER_LOGIN = "sherlock";
-
-    private final int firstUserId = 770035;
+    private final String THIRD_USER_PASSWORD = "moriarty";
+    private final String THIRD_USER_LOGIN = "moriarty";
+    
+    private final int thirdUserId = 788109;
+    private final int firstUserId = 788114;
     private final String firstUserName = "John Watson";
-    private final String secondUserName = "Sherlock Holmes";
+    private final String secondUserName = "S Holmes";
+    private final String thirdUserName = "Dr.Moriarty";
     private final int secondUserId = 782652;
 
     private ProgressDialog progressDialog;
@@ -56,6 +60,16 @@ public class MainActivity extends Activity {
             }
         });
         
+        findViewById(R.id.loginUser3).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				progressDialog.show();
+				createSession(THIRD_USER_LOGIN, THIRD_USER_PASSWORD);
+				
+			}
+		});
+        
         //Authenticate with quickblox cloud to use their server. Set Quickblox credentials here.
         QBSettings.getInstance().fastConfigInit("6345", "76bJpvhtaayhSjY", "QatRAh6smETmrft");
 
@@ -86,10 +100,22 @@ public class MainActivity extends Activity {
 
 	private void showCallUserActivity() {
         Intent intent = new Intent(this, ActivityCallUser.class);
-        intent.putExtra("userId", DataHolder.getInstance().getCurrentQbUser().getId() == firstUserId ? secondUserId : firstUserId);
-        intent.putExtra("userName", DataHolder.getInstance().getCurrentQbUser().getId() == firstUserId ? secondUserName : firstUserName);
-        intent.putExtra("myId", DataHolder.getInstance().getCurrentQbUser().getId() != firstUserId ? secondUserId : firstUserId);
-        intent.putExtra("myName", DataHolder.getInstance().getCurrentQbUser().getId() != firstUserId ? secondUserName : firstUserName);
+        
+        intent.putExtra("secondId", secondUserId);
+        intent.putExtra("secondUser", secondUserName);
+        intent.putExtra("firstId", firstUserId);
+        intent.putExtra("firstUser", firstUserName);
+        intent.putExtra("thirdId", thirdUserId);
+        intent.putExtra("thirdUser", thirdUserName);
+        
+        intent.putExtra("myID", DataHolder.getInstance().getCurrentQbUser().getId());
+        if(DataHolder.getInstance().getCurrentQbUser().getId() == firstUserId)
+        	intent.putExtra("myName", firstUserName);
+        if(DataHolder.getInstance().getCurrentQbUser().getId() == secondUserId)
+        	intent.putExtra("myName", secondUserName);
+        if(DataHolder.getInstance().getCurrentQbUser().getId() == thirdUserId)
+        	intent.putExtra("myName", thirdUserName);
+        
         startActivity(intent);
         finish();
     }
